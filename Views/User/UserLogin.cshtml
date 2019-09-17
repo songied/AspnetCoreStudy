@@ -1,0 +1,29 @@
+﻿@model AspnetCoreStudy.ViewModel.LoginViewModel
+@{
+    ViewData["Title"] = "UserLogin";
+}
+
+<h1>UserLogin</h1>
+
+<form class="form-horizontal" method="post" asp-controller="User" asp-action="UserLogin">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label>사용자ID</label>
+        <input type="text" asp-for="UserId" class="form-control" placeholder="사용자 ID 입력" />
+        <span class="text-danger" asp-validation-for="UserId"></span>
+    </div>
+
+    <div class="form-group">
+        <label>비밀번호</label>
+        <input type="password" asp-for="UserPw" class="form-control" placeholder="비밀번호 입력" />
+        <span class="text-danger" asp-validation-for="UserPw"></span>
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">로그인</button>
+    </div>
+</form>
+
+

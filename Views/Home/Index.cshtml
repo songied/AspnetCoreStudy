@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div id="wrap">
+    <div id="top"><span>top</span></div>
+    <div id="left"><span>left</span></div>
+    <div id="content"><span>content</span></div>
+    <div id="right"><span>right</span></div>
+</div>
+
+<style type="text/css">
+    #wrap {
+        width: 980px;
+        height: 800px;
+        background: #dddddd;
+    }
+
+        #wrap #top {
+            width: 960px;
+            height: 130px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            background: #FDED5E;
+        }
+
+        #wrap #left {
+            display: inline;
+            float: left;
+            width: 220px;
+            height: 500px;
+            margin-left: 10px;
+            background: #33CCFF;
+        }
+
+        #wrap #content {
+            float: left;
+            width: 500px;
+            height: 500px;
+            margin-left: 10px;
+            background: #BFF484;
+        }
+
+        #wrap #right {
+            float: left;
+            width: 220px;
+            height: 500px;
+            margin-left: 10px;
+            background: #73534D;
+        }
+
+
+    span {
+        font-size: 30pt;
+    }
+</style>
