@@ -58,7 +58,8 @@ namespace AspnetCoreStudy.Controllers
                     {
                         //로그인 성공했을때
                         //HttpContext.Session.SetInt32(key, value);
-                        //HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.UserId);
+                        HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.UserNo);
+
                         return RedirectToAction("LoginSuccess", "Home"); // 로그인 성공 페이지로 이동
                     }
                 }
@@ -66,6 +67,12 @@ namespace AspnetCoreStudy.Controllers
                 ModelState.AddModelError(string.Empty, "사용자 ID 혹은 비밀번호가 올바르지 않습니다.");
             }
             return View(model);
+        }
+
+        public IActionResult UserLogout()
+        {
+            HttpContext.Session.Remove("USER_LOGIN_KEY");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult UserLeave()

@@ -6,7 +6,7 @@ namespace AspnetCoreStudy.Models
 {
     public class Reply
     {   [Key]
-        public int ReplyNum { get; set; }
+        public int ReplyNo { get; set; }
 
         [Required]
         public string ReplyContent { get; set; }
@@ -15,9 +15,9 @@ namespace AspnetCoreStudy.Models
         public DateTime ReplyReg { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public int UserNo { get; set; }
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserNo")]
         public virtual Member User { get; set; }
     }
 }

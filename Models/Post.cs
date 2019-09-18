@@ -6,12 +6,12 @@ namespace AspnetCoreStudy.Models
 {
     public class Post
     {   [Key]
-        public int PostNum { get; set; }
+        public int PostNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="제목을 입력하세요.")]
         public string PostTittle { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "내용을 입력하세요.")]
         public string PostContent { get; set; }
 
         public int PostViews { get; set; }
@@ -22,9 +22,9 @@ namespace AspnetCoreStudy.Models
         public DateTime PostReg { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public int UserNo { get; set; }
 
-        [ForeignKey("UserId")]
+        [ForeignKey("UserNo")]
         public virtual Member User { get; set; }
     }
 }

@@ -5,6 +5,9 @@ namespace AspnetCoreStudy.Models
 {
     public class Member
     {   [Key] //PK 설정
+        public int UserNo { get; set; }
+
+        [Required(ErrorMessage ="ID를 입력하세요")]
         public string UserId { get; set; }
 
         [Required(ErrorMessage ="비밀번호를 입력하세요")]//NOT NULL 설정

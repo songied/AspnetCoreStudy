@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>@post.PostNo</td>
+                <td>@post.PostTittle</td>
+                <td>@post.UserNo</td>
+                <td>@post.PostReg</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Context.Session.GetInt32("USER_LOGIN_KEY") != null)
+{
+    <a class="btn btn-warning" asp-controller="Post" asp-action="PostAdd">게시물 작성</a>
+}
