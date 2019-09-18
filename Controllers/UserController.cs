@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AspnetCoreStudy.DataContext;
 using AspnetCoreStudy.Models;
 using AspnetCoreStudy.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspnetCoreStudy.Controllers
@@ -56,6 +57,8 @@ namespace AspnetCoreStudy.Controllers
                     if (user != null)
                     {
                         //로그인 성공했을때
+                        //HttpContext.Session.SetInt32(key, value);
+                        //HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.UserId);
                         return RedirectToAction("LoginSuccess", "Home"); // 로그인 성공 페이지로 이동
                     }
                 }

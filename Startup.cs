@@ -33,6 +33,9 @@ namespace AspnetCoreStudy
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            // Session - 서비스에 등록함.
+            services.AddSession(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +55,9 @@ namespace AspnetCoreStudy
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            //Session - Application에서 사용하겠다.
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
