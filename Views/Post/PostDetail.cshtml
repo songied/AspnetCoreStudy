@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "PostDetail";
+}
+
+<h1>PostDetail</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">상세 읽기 - @Model.PostTittle</h3>
+        @if (Model.PostGroup == 0)
+        {
+            <h3 class="text-right">일반게시판</h3>
+        }
+        else if (Model.PostGroup == 1)
+        {
+            <h3 class="text-right">C# 게시판</h3>
+        }
+        else if (Model.PostGroup == 2)
+        {
+            <h3 class="text-right">CSS 게시판</h3>
+        }
+        else if (Model.PostGroup == 2)
+        {
+            <h3 class="text-right">기타 게시판</h3>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10">
+        <div class="card">
+           <div class="card-header">
+                <label>제목 : </label> @Model.PostTittle
+            </div>
+            <div class="card-body">
+                @Model.PostContent
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a class="btn btn-primary" asp-controller="Post" asp-action="Index">목록</a>
+        </div>
+    </div>
+</div>

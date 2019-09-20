@@ -19,10 +19,15 @@
                     <textarea class="form-control" rows="20" asp-for="PostContent" placeholder="내용 입력"></textarea>
                     <span class="text-danger" asp-validation-for="PostContent"></span>
                 </div>
-                @*@<div class="form-group">
-                    <label>제목</label>
-                    <input type="text" class="form-control" asp-for="PostGroup" placeholder="그륩 선택" />
-                </div>*@
+                <div class="form-group">
+                    <label>게시판 분류</label>
+                    <select name='PostGroup' asp-for="PostGroup">
+                        <option value='0'>일반</option>
+                        <option value='1'>C#</option>
+                        <option value='2'>CSS</option>
+                        <option value='3'>기타</option>
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">저장</button>

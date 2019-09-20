@@ -21,7 +21,28 @@ namespace AspnetCoreStudy.Controllers
             using (var db = new AspnetCoreStudyDbContext())
             {
                 var list = db.Posts.ToList();
+
+                //테이블 Join을 통해 UserId 추출
+                var list1 = (from ps in db.Posts
+                             join mb in db.Members on ps.UserNo equals mb.UserNo
+                            select new { UserId = mb.UserId }).ToList();
+                //, ps.PostContent, ps.PostGroup, ps.PostViews, ps.PostTittle, ps.PostNo, ps.PostReg
+                //var list3 = db.Posts.Join(db.Members, ps => ps.PostNo, mb => mb.UserNo, (ps, mb) => new { Post = ps, Member = mb });
                 return View(list);
+            }
+        }
+
+        public IActionResult PostDetail(int postNo) //게시물 상세보기
+        {
+            if(HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
+            {
+                //로그인이 안된 상태
+                return RedirectToAction("UserLogin", "User");
+            }
+            using (var db = new AspnetCoreStudyDbContext())
+            {
+                var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //ppostNo의 정보를 받는거
+                return View(post);
             }
         }
 

@@ -39,7 +39,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Test">Test</a>
                         </li>
                     </ul>
-                    <ul class="navbar nav">
+                    <ul class="navbar nav text-right">
                         @if (Context.Session.GetInt32("USER_LOGIN_KEY") == null)
                         {
                             <li class="nav-item">
