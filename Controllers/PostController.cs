@@ -6,6 +6,7 @@ using AspnetCoreStudy.DataContext;
 using AspnetCoreStudy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspnetCoreStudy.Controllers
 {
@@ -20,12 +21,13 @@ namespace AspnetCoreStudy.Controllers
             }
             using (var db = new AspnetCoreStudyDbContext())
             {
-                var list = db.Posts.ToList();
-
+                //var list = db.Posts.ToList();
+                var list = db.Posts.Include(u => u.Member).ToList(); //EntityFrameworkCore의 Include를 이용한 테이블 조인
+               
                 //테이블 Join을 통해 UserId 추출
-                var list1 = (from ps in db.Posts
+                /*var list1 = from ps in db.Posts
                              join mb in db.Members on ps.UserNo equals mb.UserNo
-                            select new { UserId = mb.UserId }).ToList();
+                            select new { UserId = mb.UserId };*/
                 //, ps.PostContent, ps.PostGroup, ps.PostViews, ps.PostTittle, ps.PostNo, ps.PostReg
                 //var list3 = db.Posts.Join(db.Members, ps => ps.PostNo, mb => mb.UserNo, (ps, mb) => new { Post = ps, Member = mb });
                 return View(list);
@@ -41,7 +43,7 @@ namespace AspnetCoreStudy.Controllers
             }
             using (var db = new AspnetCoreStudyDbContext())
             {
-                var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //ppostNo의 정보를 받는거
+                var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //postNo의 정보를 받는거
                 return View(post);
             }
         }

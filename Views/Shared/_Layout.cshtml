@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +54,10 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UserLogout">로그아웃</a>
+                            </li>
+                            <li class="nav-item">
+                                @{int userNo = Context.Session.GetInt32("USER_LOGIN_KEY").Value;}
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-route-userNo="@userNo" asp-action="UserActivity">나의정보</a>
                             </li>
                         }
                     </ul>

@@ -7,15 +7,27 @@ using AspnetCoreStudy.Models;
 using AspnetCoreStudy.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspnetCoreStudy.Controllers
 {
     public class UserController : Controller
     {
 
-        public IActionResult UserActivity()
+        public IActionResult UserActivity(int userNo)
         {
-            return View();
+            if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
+            {
+                //로그인이 안된 상태 일 경우 로그인페이지로
+                return RedirectToAction("UserLogin", "User");
+            }
+            using (var db = new AspnetCoreStudyDbContext())
+            {
+                //var user = db.Members.FirstOrDefault(n => n.UserNo.Equals(userNo)); //userNo의 정보를 받는거
+                var user = db.Posts.Include(u => u.Member).Where(c => c.UserNo.Equals(HttpContext.Session.GetInt32("USER_LOGIN_KEY"))).ToList();
+
+                return View(user);
+            }
         }
 
         public IActionResult UserJoin()
@@ -80,9 +92,18 @@ namespace AspnetCoreStudy.Controllers
             return View();
         }
 
-        public IActionResult UserModify()
+        public IActionResult UserModify(int userNo) //update로 db 에 save
         {
-            return View();
+            if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
+            {
+                //로그인이 안된 상태 일 경우 로그인페이지로
+                return RedirectToAction("UserLogin", "User");
+            }
+            using (var db = new AspnetCoreStudyDbContext())
+            {
+                var user = db.Members.FirstOrDefault(n => n.UserNo.Equals(userNo)); //userNo의 정보를 받는거
+                return View(user);
+            }
         }
     }
 }

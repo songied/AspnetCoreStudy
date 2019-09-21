@@ -2,6 +2,75 @@
 @{
     ViewData["Title"] = "UserActivity";
 }
-
+@{  // Model에 들어있는 Member 값들을 담기
+    int userNo;
+    string userId = null;
+    string userPw = null;
+    string userEmail = null;
+    string userGender = null;
+    string userNm = null;
+    string userPhoto = null;
+    DateTime? userReg = null;
+    //userReg = new DateTime();
+ } 
 <h1>UserActivity</h1>
+@foreach (var user in Model)
+{
+    userNo = user.Member.UserNo;
+    userId = user.Member.UserId;
+    userPw = user.Member.UserPw;
+    userEmail = user.Member.UserEmail;
+    userGender = user.Member.UserGender;
+    userNm = user.Member.UserNm;
+    userPhoto = user.Member.UserPhoto;
+    userReg = user.Member.UserReg;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"> @userId 님의 정보</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header">
+                <h5>ID : @userId</h5>
+                <h5>이름 : @userNm</h5> 
+                <h5>성별 : @userGender</h5> 
+                <h5>이메일 : @userEmail</h5> 
+                <h5>가입일자 : @userReg</h5> 
+            </div>
+            <div class="card-body">
+                <label>게시물</label>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>분류</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var post in Model)
+                        {
+                            <tr>
+                                <td>@post.PostNo</td>
+                                <td>
+                                    <a asp-controller="Post" asp-action="PostDetail" asp-route-postNo="@post.PostNo">@post.PostTittle</a>
+                                </td>
+                                <td>@post.PostGroup</td>
+                                <td>@post.PostReg</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a class="btn btn-primary" asp-controller="User" asp-action="UserModify">수정</a>
+        </div>
+    </div>
+</div>
 

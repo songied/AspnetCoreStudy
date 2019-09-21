@@ -18,6 +18,8 @@ namespace AspnetCoreStudy.Models
         public int UserNo { get; set; }
 
         [ForeignKey("UserNo")]
-        public virtual Member User { get; set; }
+        //public virtual Member User { get; set; }
+
+        public Member Member { get; set; }
     }
 }

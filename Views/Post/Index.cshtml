@@ -16,13 +16,14 @@
     </thead>
     <tbody>
         @foreach (var post in Model)
-        { 
+        {
+            Console.WriteLine(post.PostNo);
             <tr>
                 <td>@post.PostNo</td>
                 <td>
                     <a asp-controller="Post" asp-action="PostDetail" asp-route-postNo="@post.PostNo">@post.PostTittle</a>
                 </td>
-                <td>@post.UserNo</td>
+                <td>@post.Member.UserId</td>
                 <td>@post.PostReg</td>
             </tr>
         }
