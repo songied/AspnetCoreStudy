@@ -43,7 +43,8 @@ namespace AspnetCoreStudy.Controllers
             }
             using (var db = new AspnetCoreStudyDbContext())
             {
-                var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //postNo의 정보를 받는거
+                //var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //postNo의 정보를 받는거
+                var post = db.Posts.Include(u => u.Member).Where(c => c.PostNo.Equals(postNo)).ToList();
                 return View(post);
             }
         }
@@ -83,14 +84,43 @@ namespace AspnetCoreStudy.Controllers
             return View(model);
         }
 
-        public IActionResult PostEdit()
+        public IActionResult PostEdit(int postNo)
         {
             if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
             {
                 //로그인이 안된 상태
                 return RedirectToAction("UserLogin", "User");
             }
-            return View();
+            using (var db = new AspnetCoreStudyDbContext())
+            {
+                var post = db.Posts.FirstOrDefault(n => n.PostNo.Equals(postNo)); //postNo의 정보를 받는거
+                return View(post);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult PostEdit(Post model)
+        {
+            if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
+            {
+                //로그인이 안된 상태
+                return RedirectToAction("UserLogin", "User");
+            }
+            model.UserNo = int.Parse(HttpContext.Session.GetInt32("USER_LOGIN_KEY").ToString());
+            if (ModelState.IsValid)
+            {
+                using (var db = new AspnetCoreStudyDbContext())
+                {
+                    db.Entry(model).State = EntityState.Modified;
+                    if (db.SaveChanges() > 0)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "변경 사항을 저장 할 수 없습니다.");
+            }
+
+            return View(model);
         }
 
         public IActionResult PostDelete()

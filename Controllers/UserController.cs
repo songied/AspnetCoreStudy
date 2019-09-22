@@ -26,6 +26,12 @@ namespace AspnetCoreStudy.Controllers
                 //var user = db.Members.FirstOrDefault(n => n.UserNo.Equals(userNo)); //userNo의 정보를 받는거
                 var user = db.Posts.Include(u => u.Member).Where(c => c.UserNo.Equals(HttpContext.Session.GetInt32("USER_LOGIN_KEY"))).ToList();
 
+                //사용자의 게시물이 하나도 없을경우 사용자의 기본 정보만 보내준다
+                if (user.Count == 0)
+                {
+                    var user1 = db.Members.FirstOrDefault(n => n.UserNo.Equals(userNo));
+                    return View(user1);
+                }
                 return View(user);
             }
         }
@@ -104,6 +110,31 @@ namespace AspnetCoreStudy.Controllers
                 var user = db.Members.FirstOrDefault(n => n.UserNo.Equals(userNo)); //userNo의 정보를 받는거
                 return View(user);
             }
+        }
+
+        [HttpPost]
+        public IActionResult UserModify(Member model)
+        {
+            if (HttpContext.Session.GetInt32("USER_LOGIN_KEY") == null)
+            {
+                //로그인이 안된 상태 일 경우 로그인페이지로
+                return RedirectToAction("UserLogin", "User");
+            }
+            model.UserNo = int.Parse(HttpContext.Session.GetInt32("USER_LOGIN_KEY").ToString());
+            if (ModelState.IsValid)
+            {
+
+                using (var db = new AspnetCoreStudyDbContext())
+                {
+                    db.Entry(model).State = EntityState.Modified;
+                    if (db.SaveChanges() > 0)
+                    {
+                        return RedirectToAction("Index","Home");
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "변경 사항을 저장 할 수 없습니다.");
+            }
+            return View(model);
         }
     }
 }

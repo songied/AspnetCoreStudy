@@ -1,7 +1,38 @@
-﻿
+﻿@model AspnetCoreStudy.Models.Post
 @{
     ViewData["Title"] = "PostEdit";
 }
-
 <h1>PostEdit</h1>
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <form class="form-horizontal" method="post" asp-controller="Post" asp-action="PostEdit" asp-route-postNo="@Model.PostNo">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label>제목</label>
+                <input type="text" class="form-control" asp-for="PostTittle" placeholder="제목 입력" />
+                <span class="text-danger" asp-validation-for="PostTittle"></span>
+            </div>
+            <div class="form-group">
+                <label>내용</label>
+                <textarea class="form-control" rows="20" asp-for="PostContent" placeholder="내용 입력"></textarea>
+                <span class="text-danger" asp-validation-for="PostContent"></span>
+            </div>
+            <div class="form-group">
+                <label>게시판 분류</label>
+                <select name='PostGroup' asp-for="PostGroup">
+                    <option value='0'>일반</option>
+                    <option value='1'>C#</option>
+                    <option value='2'>CSS</option>
+                    <option value='3'>기타</option>
+                </select>
+            </div>
 
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">저장</button>
+                <a class="btn btn-default" asp-controller="Post" asp-action="Index">취소</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-4"></div>
+</div>

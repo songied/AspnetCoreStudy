@@ -1,25 +1,46 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "PostDetail";
 }
+@{
+    int? postNo = null;
+    string postTittle = null;
+    int? postGroup = null;
+    string postContent = null;
+    DateTime? postReg = null;
+    string userId = null;
+    int? userNo = null;
+
+    foreach (var post in Model)
+    {
+        postNo = post.PostNo;
+        postTittle = post.PostTittle;
+        postGroup = post.PostGroup;
+        postContent = post.PostContent;
+        postReg = post.PostReg;
+        userId = post.Member.UserId;
+        userNo = post.Member.UserNo;
+    }
+}
 
 <h1>PostDetail</h1>
+
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header">상세 읽기 - @Model.PostTittle</h3>
-        @if (Model.PostGroup == 0)
+        <h3 class="page-header">상세 읽기 - @postTittle</h3>
+        @if (postGroup == 0)
         {
             <h3 class="text-right">일반게시판</h3>
         }
-        else if (Model.PostGroup == 1)
+        else if (postGroup == 1)
         {
             <h3 class="text-right">C# 게시판</h3>
         }
-        else if (Model.PostGroup == 2)
+        else if (postGroup == 2)
         {
             <h3 class="text-right">CSS 게시판</h3>
         }
-        else if (Model.PostGroup == 2)
+        else if (postGroup == 2)
         {
             <h3 class="text-right">기타 게시판</h3>
         }
@@ -29,14 +50,22 @@
 <div class="row">
     <div class="col-lg-10">
         <div class="card">
-           <div class="card-header">
-                <label>제목 : </label> @Model.PostTittle
+            <div class="card-header">
+                <label>제목 : </label> @postTittle
+                <div class="text-right">
+                    <label>작성자 : </label> @userId
+                </div>
             </div>
+
             <div class="card-body">
-                @Model.PostContent
+                @postContent
             </div>
         </div>
         <div class="card-footer text-right">
+            @if(userNo.Equals(Context.Session.GetInt32("USER_LOGIN_KEY").Value))
+            { 
+            <a class="btn btn-warning" asp-controller="Post" asp-action="PostEdit" asp-route-postNo="@postNo">수정</a>//로그인 유저와 글쓴이가 같을 경우 수정가능
+            }
             <a class="btn btn-primary" asp-controller="Post" asp-action="Index">목록</a>
         </div>
     </div>
