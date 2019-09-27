@@ -1,21 +1,52 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@using System.Data;
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <div id="wrap">
-    <div id="top"><span>top</span></div>
-    <div id="left"><span>left</span></div>
-    <div id="content"><span>content</span></div>
-    <div id="right"><span>right</span></div>
+    @*<div id="top"><span>top</span></div>*@
+    <div id="left" class="col-lg-6">
+        <span>일반게시판</span>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Post" asp-action="PostDetail" asp-route-postNo="@post.PostNo">@post.PostTittle</a>
+                        </td>
+                        <td>@post.PostReg</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*<div id="content"><span>content</span></div>*@
+    <div id="right" class="col-lg-6">
+        <span>C#게시판</span>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 
 <style type="text/css">
     #wrap {
-        width: 980px;
+        @*width: 220px;*@
         height: 800px;
         background: #dddddd;
     }
@@ -31,9 +62,9 @@
         #wrap #left {
             display: inline;
             float: left;
-            width: 220px;
+            @*width: 220px;*@
             height: 500px;
-            margin-left: 10px;
+            margin-left: 0px;
             background: #33CCFF;
         }
 
@@ -47,9 +78,9 @@
 
         #wrap #right {
             float: left;
-            width: 220px;
+            @*width: 220px;*@
             height: 500px;
-            margin-left: 10px;
+            margin-left: 0px;
             background: #73534D;
         }
 
