@@ -40,6 +40,17 @@
                     <th>작성자</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach (var post in ViewBag.post2)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Post" asp-action="PostDetail" asp-route-postNo="@post.PostNo">@post.PostTittle</a>
+                        </td>
+                        <td>@post.PostReg</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>

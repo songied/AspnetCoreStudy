@@ -46,11 +46,42 @@ namespace AspnetCoreStudy.Controllers
                     };
 
                     posts.Add(post);
-                    var list = db.Posts.ToList();
-                    //var list = db.Posts.Include(u => u.Member).ToList(); //EntityFrameworkCore의 Include를 이용한 테이블 조인
 
                 }
-                    return View(posts.AsEnumerable());
+                conn.Dispose();
+                ////////////////////////////////////////////////////////ViewBag을 이용한 DB값 넘기기 
+                DataTable dt2 = new DataTable();
+                string ConnectString2 = @"Server=localhost;Database=AspnetCoreStudyDb;User Id=sa;Password = 1234; "; //연결할 DB문
+                SqlCommand cmd2 = new SqlCommand(); //SQL커맨드 선언
+                SqlConnection conn2 = new SqlConnection(ConnectString2); //연결문을 통해 DB 연결
+                conn2.Open();
+                cmd2.CommandType = CommandType.StoredProcedure; //SQLCommand에서 사용할 커멘드 타입 형식 지정
+                cmd2.CommandText = "POST_LIST"; //불러올 프로시저명 지정
+                cmd2.Parameters.Add("@PostGroup", SqlDbType.Int);        //프로시저에서 선언한 변수명과 데이터형 지정
+                cmd2.Parameters["@PostGroup"].Value = 1;                 // 프로시저 변수에 입력할 값 혹은 변수 지정
+                cmd2.Connection = conn2; //SQL커맨드가 앞에서 선언한 DB로 연결
+                SqlDataAdapter da2 = new SqlDataAdapter(); // Select문 일경우에는 이렇게 연결
+                da2.SelectCommand = cmd2;
+                da2.Fill(dt2);
+
+                var posts2 = new List<Post>();
+                foreach (DataRow dr in dt2.Rows)
+                {
+                    var post = new Post
+                    {
+                        PostNo = Convert.ToInt32(dr["PostNo"]),
+                        PostContent = Convert.ToString(dr["PostContent"]),
+                        PostGroup = Convert.ToInt32(dr["PostGroup"]),
+                        PostReg = Convert.ToDateTime(dr["PostReg"]),
+                        PostTittle = Convert.ToString(dr["PostTittle"]),
+                        PostViews = Convert.ToInt32(dr["PostViews"])
+                    };
+
+                    posts2.Add(post);
+                    ViewBag.post2 = posts2;
+                }
+
+                return View(posts.AsEnumerable());
             }
         }
 
